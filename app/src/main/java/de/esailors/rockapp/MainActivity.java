@@ -1,25 +1,27 @@
 package de.esailors.rockapp;
 
+import android.media.MediaPlayer;
+import android.os.Bundle;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 
-
 public class MainActivity extends ActionBarActivity implements
         GestureDetector.OnGestureListener,
         GestureDetector.OnDoubleTapListener {
 
     private GestureDetectorCompat mDetector;
+    private MediaPlayer mPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getSupportActionBar().hide();
         // Instantiate the gesture detector with the
         // application context and an implementation of
         // GestureDetector.OnGestureListener
@@ -33,7 +35,7 @@ public class MainActivity extends ActionBarActivity implements
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        //getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
@@ -61,12 +63,21 @@ public class MainActivity extends ActionBarActivity implements
 
     @Override
     public boolean onSingleTapConfirmed(MotionEvent e) {
-        return false;
+        if (mPlayer != null && mPlayer.isPlaying()) {
+            mPlayer.stop();
+        }
+        return true;
     }
 
     @Override
     public boolean onDoubleTap(MotionEvent e) {
-        return false;
+
+        if (mPlayer != null && mPlayer.isPlaying()) {
+            return true;
+        }
+        mPlayer = MediaPlayer.create(this, R.raw.nd_jag);
+        mPlayer.start();
+        return true;
     }
 
     @Override
@@ -93,15 +104,36 @@ public class MainActivity extends ActionBarActivity implements
     public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
         if (distanceY > 10 && Math.abs(distanceX) < 5) {
             Log.d("TOUCH", "scroll up");
+            if (mPlayer != null && mPlayer.isPlaying()) {
+                return true;
+            }
+            mPlayer = MediaPlayer.create(this, R.raw.rhcp_so18);
+            mPlayer.start();
         }
         if (distanceY < -10 && Math.abs(distanceX) < 5) {
             Log.d("TOUCH", "scroll down");
+            if (mPlayer != null && mPlayer.isPlaying()) {
+                return true;
+            }
+            mPlayer = MediaPlayer.create(this, R.raw.jb);
+            mPlayer.start();
         }
         if (distanceX > 10 && Math.abs(distanceY) < 5) {
             Log.d("TOUCH", "scroll left");
+            if (mPlayer != null && mPlayer.isPlaying()) {
+                return true;
+            }
+            mPlayer = MediaPlayer.create(this, R.raw.jbg);
+            mPlayer.start();
+
         }
         if (distanceX < -10 && Math.abs(distanceY) < 5) {
             Log.d("TOUCH", "scroll right");
+            if (mPlayer != null && mPlayer.isPlaying()) {
+                return true;
+            }
+            mPlayer = MediaPlayer.create(this, R.raw.rhcp);
+            mPlayer.start();
         }
         return true;
     }
