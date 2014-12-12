@@ -63,6 +63,7 @@ public class MainActivity extends ActionBarActivity implements
 
     @Override
     public boolean onSingleTapConfirmed(MotionEvent e) {
+        Log.d("TOUCH", "single tab");
         if (mPlayer != null && mPlayer.isPlaying()) {
             mPlayer.stop();
         }
@@ -71,7 +72,7 @@ public class MainActivity extends ActionBarActivity implements
 
     @Override
     public boolean onDoubleTap(MotionEvent e) {
-
+        Log.d("TOUCH", "double tab");
         if (mPlayer != null && mPlayer.isPlaying()) {
             return true;
         }
@@ -132,7 +133,7 @@ public class MainActivity extends ActionBarActivity implements
             if (mPlayer != null && mPlayer.isPlaying()) {
                 return true;
             }
-            mPlayer = MediaPlayer.create(this, R.raw.rhcp);
+            mPlayer = MediaPlayer.create(this, R.raw.guns);
             mPlayer.start();
         }
         return true;
@@ -140,7 +141,12 @@ public class MainActivity extends ActionBarActivity implements
 
     @Override
     public void onLongPress(MotionEvent e) {
-
+        Log.d("TOUCH", "long tab");
+        if (mPlayer != null && mPlayer.isPlaying()) {
+            return;
+        }
+        mPlayer = MediaPlayer.create(this, R.raw.acdc);
+        mPlayer.start();
     }
 
     @Override
